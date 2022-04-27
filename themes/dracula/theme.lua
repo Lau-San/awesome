@@ -584,6 +584,7 @@ function theme.at_screen_connect(s)
     s.mywibox = awful.wibar({
        position = "top",
        screen   = s,
+	   opacity	= 0.9,
        height   = theme.bar_height,
        bg       = theme.bar_bg,
        fg       = theme.bar_fg
