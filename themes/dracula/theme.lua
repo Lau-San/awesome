@@ -613,9 +613,9 @@ function theme.at_screen_connect(s)
           layout = wibox.layout.fixed.horizontal,
 
           separator,
-          volume_widget,
-          separator,
           net_widget,
+          separator,
+          volume_widget,
           separator,
           battery_widget,
           separator,
