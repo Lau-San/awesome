@@ -47,7 +47,7 @@ theme.font          = "Ubuntu 12"
 theme.taglist_font  = "Dosis Bold 14"
 
 -- WALLPAPER
-theme.wallpaper = theme.dir .. "/wallpaper.png"
+theme.wallpaper     = theme.dir .. "/wallpaper.png"
 
 -- COLOR PALETTE
 ---------------------------------------------------------
@@ -136,17 +136,16 @@ theme.useless_gap   = 4
 -- WIDGETS
 -- =================================================== --
 
-local widget_spacing			= 8
-local widget_vertical_offset	= 1
-
-local icon_size  		= 18
-local icon_margin_top 	= (theme.bar_height - icon_size) // 2
+local widget_spacing    = 8
+local icon_size         = 18
+local icon_margin_top   = (theme.bar_height - icon_size) // 2
 
 -- SEPARATOR
 ------------
 
 local separator = wibox.widget {
-    layout = wibox.layout.fixed.horizontal,
+    layout  = wibox.layout.fixed.horizontal,
+
     separators.arrow_left("alpha", colors.gray),
     separators.arrow_left(colors.gray, "alpha"),
 }
@@ -164,21 +163,20 @@ theme.widget_clock_fg   = colors.green
 ---------------
 
 local clock_widget = wibox.widget {
-	layout 	= wibox.container.margin,
+    layout  = wibox.container.margin,
+    bottom  = widget_vertical_offset,
+    left    = widget_spacing,
+    right   = widget_spacing,
 
-	bottom 	= widget_vertical_offset,
-	left 	= widget_spacing,
-	right 	= widget_spacing,
-
-	{
-		widget 	= wibox.widget.textclock,
-		refresh = 60,
-		format	= markup.fontfg(
-			theme.font,
-			theme.widget_clock_fg,
-			"%b %a, %d %I:%M %p"
-		)
-	}
+    {
+        widget  = wibox.widget.textclock,
+        refresh = 60,
+        format  = markup.fontfg(
+            theme.font,
+            theme.widget_clock_fg,
+            "%b %a, %d %I:%M %p"
+        )
+    }
 }
 
 -- BATTERY
@@ -195,7 +193,7 @@ theme.widget_battery_low_fg = colors.red
 --------
 
 -- AC STATE
-theme.widget_battery_icon_ac     = theme.icons_dir .. "ac.png"
+theme.widget_battery_icon_ac = theme.icons_dir .. "ac.png"
 
 -- BATTERY LEVELS
 theme.widget_battery_icon_0 = theme.icons_dir .. "battery_0.png"
@@ -218,10 +216,10 @@ local battery_icon = wibox.widget {
     forced_height   = icon_size
 }
 local battery_widget_icon = wibox.widget {
-	layout 	= wibox.container.margin,
-	top 	= icon_margin_top,
+    layout  = wibox.container.margin,
+    top     = icon_margin_top,
 
-	battery_icon
+    battery_icon
 }
 
 -- INFO WIDGET
@@ -294,23 +292,21 @@ local battery_widget_info = lain.widget.bat {
 }
 
 local battery_widget = wibox.widget {
-	layout 	= wibox.container.margin,
+    layout  = wibox.container.margin,
+    left    = widget_spacing ,
+    right   = widget_spacing,
 
-	left	= widget_spacing ,
-	right 	= widget_spacing,
+    {
+        layout  = wibox.layout.fixed.horizontal,
 
-	{
-		layout = wibox.layout.fixed.horizontal,
+        battery_widget_icon,
+        {
+            layout  = wibox.container.margin,
+            left    = widget_spacing // 2,
 
-		battery_widget_icon,
-		{
-			layout 	= wibox.container.margin,
-
-			left 	= widget_spacing // 2,
-
-			battery_widget_info
-		}
-	}
+            battery_widget_info
+        }
+    }
 }
 
 -- VOLUME
@@ -341,10 +337,10 @@ local volume_icon = wibox.widget {
     forced_height   = icon_size
 }
 local volume_widget_icon = wibox.widget {
-	layout 	= wibox.container.margin,
-	top		= icon_margin_top,
+    layout     = wibox.container.margin,
+    top        = icon_margin_top,
 
-	volume_icon
+    volume_icon
 }
 
 -- WIDGET INFO
@@ -376,21 +372,21 @@ theme.volume = lain.widget.alsa {
 
 -- VOLUME WIDGET
 local volume_widget = wibox.widget {
-	layout 	= wibox.container.margin,
-	left 	= widget_spacing,
-	right 	= widget_spacing,
+    layout  = wibox.container.margin,
+    left    = widget_spacing,
+    right   = widget_spacing,
 
-	{
-		layout = wibox.layout.fixed.horizontal,
+    {
+        layout = wibox.layout.fixed.horizontal,
 
-		volume_widget_icon,
-		{
-			layout 	= wibox.container.margin,
-			left	= widget_spacing // 2,
+        volume_widget_icon,
+        {
+            layout  = wibox.container.margin,
+            left    = widget_spacing // 2,
 
-			theme.volume
-		}
-	}
+            theme.volume
+        }
+    }
 }
 
 -- NETWORK
@@ -418,10 +414,10 @@ local net_icon = wibox.widget {
     forced_height   = icon_size
 }
 local net_widget_icon = wibox.widget {
-	layout = wibox.container.margin,
-	top		= icon_margin_top,
+    layout  = wibox.container.margin,
+    top     = icon_margin_top,
 
-	net_icon
+    net_icon
 }
 
 -- INFO WIDGETS
@@ -460,27 +456,27 @@ local net_update = lain.widget.net {
 
 -- NETWORK WIDGET
 local net_widget = wibox.widget {
-	layout 	= wibox.container.margin,
-	left 	= widget_spacing,
-	right	= widget_spacing,
+    layout  = wibox.container.margin,
+    left    = widget_spacing,
+    right   = widget_spacing,
 
-	{
-		layout = wibox.layout.fixed.horizontal,
+    {
+        layout = wibox.layout.fixed.horizontal,
 
-		net_widget_icon,
-		{
-			layout = wibox.container.margin,
-			left	= widget_spacing // 2,
+        net_widget_icon,
+        {
+            layout  = wibox.container.margin,
+            left    = widget_spacing // 2,
 
-			{
-				layout = wibox.layout.fixed.horizontal,
+            {
+                layout = wibox.layout.fixed.horizontal,
 
-				net_widget_down,
-				net_widget_separator,
-				net_widget_up
-			}
-		}
-	}
+                net_widget_down,
+                net_widget_separator,
+                net_widget_up
+            }
+        }
+    }
 }
 
 -- =================================================== --
@@ -497,100 +493,96 @@ function theme.at_screen_connect(s)
      -- Set default layout
      awful.tag(awful.util.tagnames, s, awful.layout.layouts[1])
 
-    -- Layout button
+    -- Layout button widget
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(gears.table.join(
        awful.button({ }, 1, function () awful.layout.inc(1) end),
        awful.button({ }, 3, function () awful.layout.inc(-1) end)
     )))
 
-    -- Taglist
+    -- Taglist widget
     s.mytaglist = awful.widget.taglist {
        screen = s,
        filter = awful.widget.taglist.filter.all,
        buttons = awful.util.taglist_buttons
     }
 
-    -- Minimized Takslist
+    -- Takslist widget (shows only minimized clients)
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
         filter  = awful.widget.tasklist.filter.minimizedcurrenttags,
         layout  = {
-            layout = wibox.layout.fixed.horizontal,
-            spacing = 1,
-            spacing_widget = {
+            layout          = wibox.layout.fixed.horizontal,
+            spacing         = 1,
+            spacing_widget  = {
                 widget  = wibox.container.place,
                 valign  = "center",
                 halign  = "center",
+
                 {
-                    widget = wibox.widget.separator,
-                    forced_width = 5,
-                    forced_height = 18,
-                    thickness = 1,
-                    color = colors.pink
+                    widget          = wibox.widget.separator,
+                    forced_width    = 5,
+                    forced_height   = 18,
+                    thickness       = 1,
+                    color           = colors.blue
                 }
             }
         },
         widget_template = {
-            -- {
-            --     wibox.widget.base.make_widget(),
-            --     id = "background_role",
-            --     widget = wibox.container.background,
-            --     color = colors.green,
-            --     forced_height = 5,
-            -- },
+            layout = wibox.layout.align.vertical,
             {
-                widget = wibox.container.margin,
+                widget  = wibox.container.margin,
                 margins = 5,
                 {
-                    id = "clienticon",
-                    widget = awful.widget.clienticon
+                    widget  = awful.widget.clienticon,
+                    id      = "clienticon"
                 }
             },
             nil,
             create_callback = function(self, c, index, objects)
                 self:get_children_by_id("clienticon")[1].client = c
-            end,
-            layout = wibox.layout.align.vertical
+            end
         }
     }
 
-    -- System Tray
-	s.mysystray = wibox.widget {
-		layout	= awful.widget.only_on_screen,
-		screen 	= s.primary,
-		{
-			layout = wibox.layout.fixed.horizontal,
+    -- System Tray widget
+    s.mysystray = wibox.widget {
+        layout  = awful.widget.only_on_screen,
+        screen  = s.primary,
 
-			separator,
-			{
-				layout 	= wibox.container.margin,
-				top 	= icon_margin_top,
-				left 	= widget_spacing,
-				right 	= widget_spacing,
+        {
+            layout = wibox.layout.fixed.horizontal,
 
-				{
-					widget = wibox.widget.systray,
-					create_callback = function(self)
-						self:set_base_size(18)
-					end
-				}
-			},
-			-- space
-		}
-	}
+            -- Adding this separator it only appears in primary monitor
+            -- instead of having double separators in monitors without system tray.
+            separator,
+            {
+                layout  = wibox.container.margin,
+                top     = icon_margin_top,
+                left    = widget_spacing,
+                right   = widget_spacing,
 
-    -- Create wibox
+                {
+                    widget = wibox.widget.systray,
+                    create_callback = function(self)
+                        self:set_base_size(18)
+                    end
+                }
+            },
+        }
+    }
+
+    -- Create status bar
     s.mywibox = awful.wibar({
        position = "top",
        screen   = s,
-	   opacity	= 0.9,
+       opacity  = 0.9,
        height   = theme.bar_height,
        bg       = theme.bar_bg,
        fg       = theme.bar_fg
     })
 
-    -- Add widgets to wibox
+    -- Add widgets to the status bar
     s.mywibox:setup {
        layout = wibox.layout.align.horizontal,
 
@@ -620,18 +612,18 @@ function theme.at_screen_connect(s)
           battery_widget,
           separator,
           clock_widget,
-		  -- Implicit separator here, since systray contains a separator so that
-		  -- the screen that doesn't have a systray doesn't draw two separators
-		  -- next to eachother.
+          -- Implicit separator here, since systray contains a separator so that
+          -- the screen that doesn't have a systray doesn't draw two separators
+          -- next to eachother.
           s.mysystray,
           separator,
-		  {
-			  layout = wibox.container.margin,
-			  left	= widget_spacing,
-			  right	= widget_spacing,
+          {
+              layout    = wibox.container.margin,
+              left      = widget_spacing,
+              right     = widget_spacing,
 
-			  s.mylayoutbox
-		  }
+              s.mylayoutbox
+          }
        }
     }
 end
