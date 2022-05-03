@@ -121,6 +121,11 @@ local selected_theme = "dracula"
 -- LOAD THEME
 beautiful.init(awesome_path .. "/themes/" .. selected_theme .. "/theme.lua")
 
+-- BLING
+---------------------------------------------------------
+
+local bling = require("bling")
+
 -- WALLPAPER
 ---------------------------------------------------------
 
@@ -140,6 +145,28 @@ local system_monitor    = "bpytop"
 
 awful.util.terminal = terminal
 awful.util.shell    = "bash"
+
+
+
+-- =================================================== --
+-- SCRATCHPADS
+-- =================================================== --
+
+local notion_scratch = bling.module.scratchpad {
+    command = "notion", -- This is a script in my bin folder in my repo
+    rule = { class = "notion" },
+    sticky = true,
+    autoclose = true,
+    floating = true,
+    geometry = {
+        x = 0,
+        y = 0,
+        height = 900,
+        width = 1600
+    },
+    reapply = true,
+    dont_focus_before_close = false
+}
 
 
 -- =================================================== --
@@ -413,6 +440,13 @@ local globalkeys = my_table.join (
     awful.key({ supkey,         }, "e",
         function() awful.util.spawn_with_shell(editor) end,
         { description = "open editor", group = "applications" }),
+
+    -- SCRATCHPADS
+    --------------
+
+    awful.key({ supkey, altkey }, "n",
+        function() notion_scratch:toggle() end,
+        { description = "open notion", group = "scratchpads" }),
 
     -- NAVIGATION
     -------------
