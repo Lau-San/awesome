@@ -155,7 +155,7 @@ local notion_scratch = bling.module.scratchpad {
     command = "notion", -- This is a script in my bin folder in my repo
     rule = { class = "notion" },
     sticky = true,
-    autoclose = true,
+    autoclose = false,
     floating = true,
     geometry = {
         x = 0,
