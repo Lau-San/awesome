@@ -167,6 +167,44 @@ local notion_scratch = bling.module.scratchpad {
     dont_focus_before_close = false
 }
 
+local excalidraw_scratch = bling.module.scratchpad {
+    command = "excalidraw",
+    rule = { class = "excalidraw" },
+    sticky = true,
+    autoclose = false,
+    floating = true,
+    geometry = {
+        x = 0,
+        y = 0,
+        height = 900,
+        width = 1600
+    },
+    reapply = true,
+    dont_focus_before_close = false
+}
+
+local mindmeister_scratch = bling.module.scratchpad {
+    command = "mindmeister",
+    rule = { class = "mindmeister" },
+    sticky = true,
+    autoclose = false,
+    floating = true,
+    geometry = {
+        x = 0,
+        y = 0,
+        height = 900,
+        width = 1600
+    },
+    reapply = true,
+    dont_focus_before_close = false
+}
+
+-- This is here to make connecting signals to scratchpads easier.
+local scratchpads = {
+    notion_scratch,
+    excalidraw_scratch
+}
+
 
 -- =================================================== --
 -- TAGS
@@ -443,9 +481,20 @@ local globalkeys = my_table.join (
     -- SCRATCHPADS
     --------------
 
+    -- NOTION
     awful.key({ supkey, altkey }, "n",
         function() notion_scratch:toggle() end,
         { description = "open notion", group = "scratchpads" }),
+
+    -- EXCALIDRAW
+    awful.key({ supkey, altkey }, "e",
+        function() excalidraw_scratch:toggle() end,
+        { description = "open excalidraw", group = "scratchpads" }),
+
+    -- MINDMEISTER
+    awful.key({ supkey, altkey }, "m",
+        function() mindmeister_scratch:toggle() end,
+        { description = "open mindmeister", group = "scratchpads" }),
 
     -- NAVIGATION
     -------------
@@ -871,8 +920,11 @@ awful.rules.rules = {
 -- SIGNALS
 -- =================================================== --
 
--- NEW WINDOW
+-- WINDOWS
 ---------------------------------------------------------
+
+-- NEW WINDOW
+-------------
 
 local function new_window(c)
 
@@ -886,7 +938,7 @@ end
 client.connect_signal("manage", new_window)
 
 -- FOCUS WINDOW
----------------------------------------------------------
+---------------
 
 local function focus_window(c)
 
@@ -898,7 +950,7 @@ end
 client.connect_signal("focus", focus_window)
 
 -- UNFOCUS WINDOW
----------------------------------------------------------
+-----------------
 
 local function unfocus_window(c)
 
@@ -908,6 +960,20 @@ local function unfocus_window(c)
 end
 
 client.connect_signal("unfocus", unfocus_window)
+
+-- SCRATCHPADS
+---------------------------------------------------------
+
+-- TURN ON
+----------
+
+local function scratch_on(c)
+    c.fulscreen = true
+end
+
+for _, scratch in ipairs(scratchpads) do
+    scratch:connect_signal("turn_on", scratch_on)
+end
 
 
 -- =================================================== --
