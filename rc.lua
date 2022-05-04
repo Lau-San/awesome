@@ -25,8 +25,7 @@
 -- -> alacritty
 -- -> bpytop
 -- -> emacs
--- -> nemo
--- -> celluloid
+-- -> cfiles
 
 
 -- =================================================== --
@@ -139,8 +138,8 @@ local wallpaper = "~/Pictures/Wallpapers/dracula-soft-waves-6272a4.png"
 local terminal          = "alacritty"
 local browser           = "qutebrowser"
 local editor            = "emacsclient -c -a 'emacs'"
-local filemanager       = "nemo"
-local mediaplayer       = "celluloid"
+local filemanager       = terminal .. " -e cfiles ~"
+-- local mediaplayer       = "celluloid"
 local system_monitor    = "bpytop"
 
 awful.util.terminal = terminal
