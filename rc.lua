@@ -10,9 +10,10 @@
 -- RECOMMENDED PROGRAMS
 -- --------------------
 --
+-- -> firefox (for webaps like notion, excalidraw, etc.)
 -- -> dmenu with the following patches:
 --      -> lineheight
--- -> dmenu scripts present in my dotfiles repository (github.com/Lau-San/dotfiles)
+-- -> custom scripts in my dotfiles repository (github.com/Lau-San/dotfiles/tree/master/scripts)
 -- -> rofi
 -- -> lxsession
 -- -> feh
@@ -470,7 +471,7 @@ local globalkeys = my_table.join (
 
     -- FILE MANAGER
     awful.key({ supkey,         }, "f",
-        function() awful.util.spawn(filemanager) end,
+        function() awful.spawn.with_shell(filemanager) end,
         { description = "open file manager", group = "applications" }),
 
     -- EDITOR
