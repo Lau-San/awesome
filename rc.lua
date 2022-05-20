@@ -14,6 +14,7 @@
 -- -> dmenu with the following patches:
 --      -> lineheight
 -- -> custom scripts in my dotfiles repository (github.com/Lau-San/dotfiles/tree/master/scripts)
+-- -> taskwarrior (for managing tasks with dmenu scripts)
 -- -> rofi
 -- -> lxsession
 -- -> feh
@@ -103,8 +104,10 @@ end
 local awesome_path      = string.format("%s/.config/awesome", os.getenv("HOME"))
 local dmscripts_path    = string.format("%s/dmscripts/", os.getenv("HOME"))
 
-local dmconf = dmscripts_path .. "dmconf"
-local dmpass = dmscripts_path .. "dmpass"
+local dmrun     = dmscripts_path .. "dmrun"
+local dmconf    = dmscripts_path .. "dmconf"
+local dmpass    = dmscripts_path .. "dmpass"
+local dmtask    = dmscripts_path .. "dmtask"
 
 
 -- =================================================== --
@@ -421,7 +424,7 @@ local globalkeys = my_table.join (
     awful.key({ supkey,         }, "p",
         function()
             awful.util.spawn_with_shell(string.format(
-                "dmenu_run -h 30 -l 8 -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
+                "dmenu_run -l 25 -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
                 beautiful.prompt_bg,
                 beautiful.prompt_fg,
                 beautiful.prompt_focus_bg,
@@ -447,6 +450,11 @@ local globalkeys = my_table.join (
     awful.key({ supkey, altkey }, "p",
         function() awful.util.spawn_with_shell(dmpass) end,
         { description = "password manager", group = "dmenu scripts" }),
+
+    -- DMTASK
+    awful.key({ supkey, altkey }, "t",
+        function() awful.util.spawn_with_shell(dmtask) end,
+        { description = "tasks", group = "dmenu scripts" }),
 
     -- APPLICATIONS
     ---------------
@@ -817,9 +825,10 @@ awful.rules.rules = {
     -----------------------------------------------------
     {
         rule_any = {
-            name = {
-                "DMPass" -- Window opened by dmenu script when adding a password to pass
-            },
+            -- name = {
+            --     "DMPass",   -- Window opened by dmenu script when adding a password to pass
+            --     "DMTask"    -- Window opened by dmenu script when viewing a task list
+            -- },
             type = {
                 "dialog"
             },
@@ -833,7 +842,8 @@ awful.rules.rules = {
                 "Font-manager",
                 "Gcr-prompter",
                 "pcloud",
-                "Godot"
+                "Godot",
+                "DMScript"
             },
             role = {
                 "AlarmWindow",
@@ -845,7 +855,10 @@ awful.rules.rules = {
         properties = {
             floating    = true,
             placement    = awful.placement.centered
-        }
+        },
+        callback = function(c)
+            awful.placement.centered(c)
+        end
     },
 
     -- MAXIMIZED
@@ -916,17 +929,23 @@ awful.rules.rules = {
         }
     },
 
-    -- OTHERS
+    -- DMSCRIPT CLIENTS
     -----------------------------------------------------
 
     -- CLIENTS OPENED BY DMPASS SCRIPTS
     -----------------------------------
     {
-        rule = { name = "DMPass" },
+        rule = { name = "PassAdd" },
         properties = {
             height = 120
         }
-    }
+    },
+    {
+        rule = { class = "TaskList" },
+        properties = {
+            height = 800
+        }
+    },
 }
 
 
