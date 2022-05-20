@@ -487,6 +487,11 @@ local globalkeys = my_table.join (
         function() awful.util.spawn_with_shell(editor) end,
         { description = "open editor", group = "applications" }),
 
+    -- TICKTICK
+    awful.key({ supkey,          }, "t",
+        function() awful.util.spawn_with_shell("ticktick") end,
+        { description = "open ticktick", group = "applecations" }),
+
     -- SCRATCHPADS
     --------------
 
@@ -1039,5 +1044,6 @@ run_once("nm-applet")
 run_once("flameshot")
 run_once("discord")
 run_once("emacs --daemon")
+run_once("ticktick")
 
 awful.spawn.with_shell("pgrep -u $USER -x 'pcloud' > /dev/null || (~/Applications/pcloud)")
